@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: bookstore-inventory
+    env: python
+    plan: starter
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn bookstore.app:app
+    envVars:
+      - key: SUPABASE_URL
+      - key: SUPABASE_KEY
+      - key: FLASK_DEBUG

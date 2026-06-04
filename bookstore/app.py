@@ -145,4 +145,7 @@ def delete_book(bid):
 
 if __name__ == "__main__":
     init_db()
-    app.run(host="127.0.0.1", debug=True, port=5000, use_reloader=False)
+    port = int(os.environ.get("PORT", 5000))
+    host = os.environ.get("HOST", "0.0.0.0")
+    debug = os.environ.get("FLASK_DEBUG", "0") == "1"
+    app.run(host=host, debug=debug, port=port, use_reloader=False)
