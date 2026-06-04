@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SmartShelf · Bookstore Inventory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">📚</div>
+      <div>
+        <h1>SmartShelf</h1>
+        <p>Inventory Suite</p>
+      </div>
+    </div>
+    <nav>
+      <a class="nav-item active" data-view="dashboard"><span>◐</span> Dashboard</a>
+      <a class="nav-item" data-view="inventory"><span>▤</span> Inventory</a>
+      <a class="nav-item" data-view="add"><span>＋</span> Add Book</a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="pill">v1.0 · Flask + SQLite</div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div>
+        <h2 id="view-title">Dashboard</h2>
+        <p id="view-subtitle" class="muted">Live overview of your bookstore</p>
+      </div>
+      <div class="search-wrap">
+        <input id="search" type="search" placeholder="Search title, author or ISBN…" />
+        <select id="genre-filter"><option value="">All genres</option></select>
+      </div>
+    </header>
+
+    <!-- DASHBOARD -->
+    <section id="view-dashboard" class="view">
+      <div class="stats">
+        <div class="stat-card grad-1">
+          <p>Total Titles</p><h3 id="s-titles">—</h3><span>unique books in catalog</span>
+        </div>
+        <div class="stat-card grad-2">
+          <p>Units in Stock</p><h3 id="s-units">—</h3><span>physical copies</span>
+        </div>
+        <div class="stat-card grad-3">
+          <p>Inventory Value</p><h3 id="s-value">—</h3><span>retail valuation</span>
+        </div>
+        <div class="stat-card grad-4">
+          <p>Low / Out</p><h3 id="s-alert">—</h3><span>needs restocking</span>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <h3>Recent additions</h3>
+          <button class="btn ghost" data-jump="inventory">View all →</button>
+        </div>
+        <div id="recent-grid" class="book-grid"></div>
+      </div>
+    </section>
+
+    <!-- INVENTORY -->
+    <section id="view-inventory" class="view hidden">
+      <div class="panel">
+        <div class="panel-head">
+          <h3>All books</h3>
+          <button class="btn primary" data-jump="add">+ New book</button>
+        </div>
+        <div class="table-wrap">
+          <table id="books-table">
+            <thead><tr>
+              <th></th><th>Title</th><th>Author</th><th>Genre</th>
+              <th>Price</th><th>Stock</th><th></th>
+            </tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ADD / EDIT -->
+    <section id="view-add" class="view hidden">
+      <div class="panel form-panel">
+        <h3 id="form-title">Add a new book</h3>
+        <form id="book-form">
+          <input type="hidden" name="id"/>
+          <div class="grid-2">
+            <label>Title<input name="title" required></label>
+            <label>Author<input name="author" required></label>
+            <label>Genre
+              <select name="genre">
+                <option>Fiction</option><option>Sci-Fi</option><option>Self-Help</option>
+                <option>Memoir</option><option>History</option><option>Children</option>
+                <option>Romance</option><option>Mystery</option><option>Other</option>
+              </select>
+            </label>
+            <label>ISBN<input name="isbn"></label>
+            <label>Price (₹)<input name="price" type="number" step="0.01" min="0" required></label>
+            <label>Stock<input name="stock" type="number" min="0" required></label>
+          </div>
+          <label>Cover image URL<input name="cover" placeholder="https://…"></label>
+          <div class="form-actions">
+            <button type="button" class="btn ghost" id="cancel-edit">Cancel</button>
+            <button class="btn primary" type="submit">Save book</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div id="toast"></div>
+<script src="/static/app.js"></script>
+</body>
+</html>
